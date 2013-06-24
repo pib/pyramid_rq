@@ -25,7 +25,7 @@ def includeme(config):
         db = get_setting(config, 'db', 1)
     except ValueError:
         raise ValueError('Invalid rq/redis configuration')
-    connection = redis.Redis(host=host, port=port, db=db)
+    connection = redis.Redis(host=host, port=port, db=db, decode_responses=True)
     config.registry.settings['rq.redis'] = connection
     config.add_tween('pyramid_rq.rq_tween_factory')
 
