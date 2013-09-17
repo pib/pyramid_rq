@@ -33,7 +33,6 @@ setup(name='pyramid_rq',
       include_package_data=True,
       package_dir={'': 'src'},
       zip_safe=False,
-      use_2to3=True,
       install_requires=install_requires,
       tests_require=tests_require,
       extras_require={

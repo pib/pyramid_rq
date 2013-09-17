@@ -87,14 +87,14 @@ def parse_args():
 def get_redis_connection(registry):
     settings = registry.settings
     if 'rq.redis' not in settings:
-        print >> sys.stderr, 'Critical error: pyramid_rq not configured by application'
+        sys.stderr.write('Critical error: pyramid_rq not configured by application\n')
         sys.exit(1)
     return settings['rq.redis']
 
 
 def start_worker(environment, args):
     try:
-        queues = map(Queue, args.queues)
+        queues = list(map(Queue, args.queues))
         w = PyramidWorker(environment, queues, name=args.name)
 
         # Should we configure Sentry?

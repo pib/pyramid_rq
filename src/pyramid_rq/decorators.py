@@ -3,6 +3,11 @@ from rq.connections import resolve_connection
 from rq.queue import Queue
 from rq.worker import DEFAULT_RESULT_TTL
 
+try:
+    str_types = (str, unicode)
+except NameError:
+    str_types = (str)
+
 
 class job(object):
     def __init__(self, queue, connection=None, timeout=None,
@@ -27,7 +32,7 @@ class job(object):
         @wraps(f)
         def delay(*args, **kwargs):
             connection = resolve_connection(self.connection)
-            if isinstance(self.queue, basestring):
+            if isinstance(self.queue, str_types):
                 queue = Queue(name=self.queue, connection=connection)
             else:
                 queue = self.queue
